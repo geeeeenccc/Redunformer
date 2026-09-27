@@ -5,6 +5,7 @@ Segregates figures into:
   reports/group9/figures/GPT-2/
   reports/group9/figures/GPT-2-Medium/
   reports/group9/figures/Qwen/
+  reports/group9/figures/Llama/
 """
 
 import json
@@ -227,6 +228,7 @@ def main():
         ("GPT-2", "gpt2", "GPT-2 (124M)"),
         ("GPT-2-Medium", "gpt2-medium", "GPT-2-Medium (355M)"),
         ("Qwen", "Qwen/Qwen3-0.6B", "Qwen/Qwen3-0.6B (600M)"),
+        ("LLama", "meta-llama/Llama-3.2-1B", "Llama 3.2 (1B)"),
     ]
 
     for model_folder, model_id, display_name in models:
