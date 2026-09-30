@@ -29,7 +29,7 @@ We did not remove neurons from the weight matrices. We masked them with a forwar
 We started from a simple plan and had to drop most of it.
 
 1. Are some neurons redundant because they rarely fire?
-2. Are middle layers more redundant than early or late layers?
+2. Are middle layers less redundant than early or late layers?
 3. Are larger models more redundant, and does a good ranking pull further ahead of chance as models grow?
 4. Are the neurons that look spare on ordinary text the same ones that look spare on a downstream task?
 5. If two neurons are near-duplicates, is one of them cheap to delete? If not, can its contribution be routed through the other?
@@ -75,7 +75,7 @@ Firing frequency was our original plan, following the lazy-neuron phenomenon (Li
 
 ### Model depth and size do not affect the results as expected
 
-We expected middle layers to be the redundant ones. A static summary of importance suggested that. However, masking 10% of the channels in each depth band and measuring the resulting cost did not confirm this expectation:
+We expected middle layers to be less redundant than early or late layers. A static summary of importance suggested that. However, masking 10% of the channels in each depth band and measuring the resulting cost did not confirm this expectation:
 
 | model | early | middle | deep | worst |
 |---|---:|---:|---:|---|
@@ -133,7 +133,7 @@ Every recovery run below, except the 4B row, used the same budget: 200 steps, ba
 | Llama-2-7B | **−6%** | **48%** |
 | Qwen3.5-4B (smaller budget) | 2% | — |
 
-**Take-away.** Up through GPT-2 774M and Qwen3-0.6B, most of the masking cost comes back, and model size inside GPT-2 barely matters. At Llama-2-7B the same budget overfits: training loss falls and WikiText perplexity rises on both the masked model and the unmasked control. The 4B result looked like the same failure, but that run was not comparable, because it saw 16 times less text. The 7B run was comparable, and it still failed. We did not try a shorter schedule, so this is one training recipe, not a proof that a 7B mask can never be repaired. Qwen3.5-9B was not fine-tuned. The 7B run already answers that question.
+**Take-away.** Up through GPT-2 774M and Qwen3-0.6B, most of the masking cost comes back, and model size inside GPT-2 barely matters. At Llama-2-7B the same budget overfits: training loss falls and WikiText perplexity rises on both the masked model and the unmasked control. The 4B result looked like the same failure, but that run was not comparable, because it saw 16 times less text. The 7B run was comparable at 819 thousand tokens, and it still failed. We did not try a shorter schedule, so this is one training recipe, not a proof that a 7B mask can never be repaired. Qwen3.5-9B was not fine-tuned. The 7B run already answers that question.
 
 ## Problems
 

@@ -83,7 +83,7 @@ Numbers below are relative to each model's own unmasked baseline unless a raw pe
 We started from a simple plan and had to drop most of it.
 \begin{enumerate}
   \item Are some neurons redundant because they rarely fire?
-  \item Are middle layers more redundant than early or late layers?
+  \item Are middle layers less redundant than early or late layers?
   \item Are larger models more redundant, and does a good ranking pull further ahead of chance as models grow?
   \item Are the neurons that look spare on ordinary text the same ones that look spare on a downstream task?
   \item If two neurons are near-duplicates, is one of them cheap to delete? If not, can its contribution be routed through the other?
@@ -154,7 +154,7 @@ The operation is masking.
 \begin{figure}[t]
   \centering
   \includegraphics[width=\columnwidth,height=0.28\textheight,keepaspectratio]{qwen35_9b_masking.png}
-  \caption{Qwen3.5-9B, the model missing from \cref{fig:masking}.
+  \caption{Qwen3.5-9B, shown separately from \cref{fig:masking}.
   WikiText-2 perplexity divided by the unmasked baseline.
   Importance stays near the baseline; frequency sits between importance and random.}
   \label{fig:9b}
@@ -197,7 +197,7 @@ We did not record that distribution, only the fraction below a cutoff.
 
 \subsection{Depth and size do not behave as expected}
 
-We expected middle layers to be the redundant ones.
+We expected middle layers to be less redundant than early or late layers.
 A static summary of importance suggested that.
 Masking 10\% of the channels in each depth band and measuring the resulting cost did not confirm this expectation.
 \Cref{tab:depth} reports the change in perplexity.
@@ -378,7 +378,7 @@ The 4B run used about 51 thousand.
 Up through GPT-2 774M and Qwen3-0.6B, most of the masking cost comes back, and model size inside GPT-2 barely matters.
 At Llama-2-7B the same budget overfits: training loss falls and WikiText perplexity rises on both the masked model and the unmasked control.
 The 4B result looked like the same failure, but that run was not comparable, because it saw 16 times less text.
-The 7B run was comparable, and it still failed.
+The 7B run was comparable at 819 thousand tokens, and it still failed.
 We did not try a shorter schedule, so this is one training recipe, not a proof that a 7B mask can never be repaired.
 Qwen3.5-9B was not fine-tuned.
 The 7B run already answers that question at this budget.
